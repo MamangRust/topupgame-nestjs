@@ -1,150 +1,179 @@
-import { Injectable } from '@nestjs/common';
-import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
-import { error } from 'console';
-import { History } from 'src/entities/history';
-import { HistoryPayment } from 'src/entities/historyPayment';
-import { HistoryPlayer } from 'src/entities/historyPlayer';
-import { HistoryVcrtopup } from 'src/entities/historyVcrTopup';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Bank } from 'src/entities/bank';
+import { Member } from 'src/entities/member';
+import { Nominal } from 'src/entities/nominal';
+import { PaymentMethod } from 'src/entities/payment_method';
 import { Transaction } from 'src/entities/transaction';
-import { EntityManager, Repository } from 'typeorm';
+import { Voucher } from 'src/entities/voucher';
+import { Repository } from 'typeorm';
+import { CreateTransactionDto } from './dto/create-transaction.dto';
 
 @Injectable()
 export class TransactionService {
-    constructor(@InjectRepository(Transaction) private transactionRepository: Repository<Transaction>,
-        @InjectRepository(History) private historyRepository: Repository<History>,
+  constructor(
+    @InjectRepository(Transaction)
+    private transactionRepository: Repository<Transaction>,
+    @InjectRepository(Voucher)
+    private voucherRepository: Repository<Voucher>,
+    @InjectRepository(Nominal)
+    private nominalRepository: Repository<Nominal>,
+    @InjectRepository(PaymentMethod)
+    private paymentMethodRepository: Repository<PaymentMethod>,
+    @InjectRepository(Bank)
+    private bankRepository: Repository<Bank>,
+    @InjectRepository(Member)
+    private memberRepository: Repository<Member>,
+  ) { }
 
-        @InjectEntityManager() private entityManager: EntityManager,
+  async getTransactions(userId: string, status?: Transaction['status']): Promise<{ transactions: Transaction[], totalSpent: number }> {
+    try {
+      const queryBuilder = this.transactionRepository.createQueryBuilder('transaction')
+        .leftJoinAndSelect('transaction.nominal', 'nominal')
+        .where('transaction.member = :userId', { userId });
 
-    ) { }
+      if (status) {
+        queryBuilder.andWhere('transaction.status = :status', { status });
+      }
 
-    async findAllTransaction(filter = {}, associate = true, isApi = false): Promise<Transaction[]> {
-        let queryBuilder = this.transactionRepository.createQueryBuilder('transaction');
+      const [totalSpentResult, transactions] = await Promise.all([
+        queryBuilder
+          .select('SUM(nominal.price * (1 + transaction.taxRate))', 'totalSpent')
+          .getRawOne(),
+        queryBuilder
+          .select(['transaction', 'nominal'])
+          .getMany(),
+      ]);
 
-        if (associate) {
-            queryBuilder = queryBuilder
-                .leftJoinAndSelect('transaction.voucher', 'voucher')
-                .leftJoinAndSelect('transaction.category', 'category')
-                .leftJoinAndSelect('transaction.player', 'player')
-                .leftJoinAndSelect('player.user', 'user')
-                .leftJoinAndSelect('transaction.history', 'history')
-                .leftJoinAndSelect('history.historyPlayer', 'historyPlayer')
-                .leftJoinAndSelect('history.historyPayment', 'historyPayment')
-                .leftJoinAndSelect('history.historyVoucherTopup', 'historyVoucherTopup');
+      const totalSpent = totalSpentResult ? totalSpentResult.totalSpent : 0;
 
-            if (isApi) {
-                queryBuilder = queryBuilder
-                    .select(['transaction', 'voucher.id', 'voucher.game_name', 'voucher.game_coin_name', 'category.id', 'category.name', 'player.id', 'player.favorite', 'user.id', 'user.username', 'history.id']);
-            }
-        }
-
-        try {
-            const result = await queryBuilder.getMany();
-            return result;
-        } catch (error) {
-            throw new Error("Failed to find transactions: " + error.message);
-        }
+      return { transactions, totalSpent };
+    } catch (error) {
+      throw new NotFoundException('Transactions not found');
     }
+  }
 
-    async findTransactionById(id: string): Promise<Transaction> {
-        try {
-            const result = await this.transactionRepository.findOne({
-                where: {
-                    transaction_id: id
-                },
-                relations: [
-                    'history',
-                    'history.historyPlayer',
-                    'history.historyPayment',
-                    'history.historyVoucherTopup',
-                ],
-            });
-            return result;
-        } catch (error) {
-            throw new Error("Failed to find transaction by ID: " + error.message);
-        }
+  async getTransaction(id: number, userId: number): Promise<Transaction> {
+    try {
+      const transaction = await this.transactionRepository.findOne({
+        where: {
+          id,
+          member: { id: userId }
+        },
+        relations: ['nominal']
+      });
+
+      if (!transaction) {
+        throw new NotFoundException('Transaction not found');
+      }
+
+      return transaction;
+    } catch (error) {
+      throw new NotFoundException('Transaction not found');
     }
+  }
 
+  async addTransaction(body: CreateTransactionDto, userId: number): Promise<Transaction> {
+    try {
+      const [voucher, nominal, paymentMethod, bank] = await Promise.all([
+        this.voucherRepository.findOneOrFail({
+          where: {
+            id: body.voucherId
+          }, relations: ['category']
+        }),
+        this.nominalRepository.findOneOrFail({
+          where: {
+            id: body.nominalId
+          }
+        }),
+        this.paymentMethodRepository.findOneOrFail({
+          where: {
+            id: body.paymentMethodId
+          }
+        }),
+        this.bankRepository.findOneOrFail({
+          where: {
+            id: body.bankId
+          }
+        }),
+      ]);
 
-    async createTransaction(payload: any): Promise<Transaction> {
-        try {
-            const {
-                historyVoucherTopup,
-                historyPayment,
-                historyPlayer,
-                ...transactionPayload
-            } = payload;
-
-            const createdTransaction = await this.entityManager.transaction(async entityManager => {
-
-                const createdHistoryVoucherTopup = await entityManager.save(HistoryVcrtopup, historyVoucherTopup);
-                const createdHistoryPayment = await entityManager.save(HistoryPayment, historyPayment);
-                const createdHistoryPlayer = await entityManager.save(HistoryPlayer, historyPlayer);
-
-
-                const history = await entityManager.save(History, {
-                    historyVcrtopup: createdHistoryVoucherTopup,
-                    historyPayment: createdHistoryPayment,
-                    historyPlayer: createdHistoryPlayer,
-                });
-
-
-                transactionPayload.history = history;
-
-
-                const createdTransaction = await entityManager.save(Transaction, transactionPayload);
-
-                return createdTransaction;
-            });
-
-            return createdTransaction;
-        } catch (error) {
-            throw new Error("Failed to create transaction: " + error.message);
+      const member = await this.memberRepository.findOneOrFail({
+        where: {
+          id: userId
         }
+      });
+
+      const transaction = this.transactionRepository.create({
+        voucherName: voucher.name,
+        imageName: voucher.imageName,
+        category: voucher.category,
+        nominal: nominal,
+        paymentMethod: paymentMethod.name,
+        targetBank: bank,
+        taxRate: 10 / 100,
+        member: member
+      });
+
+      await this.transactionRepository.save(transaction);
+
+      return transaction;
+    } catch (error) {
+      if (error.code === '23503') {
+        throw new BadRequestException('One or more referenced entities not found');
+      } else {
+        throw new BadRequestException('Failed to create transaction' + error);
+      }
     }
+  }
 
-    async updateTransaction(id: string, data: any): Promise<Transaction> {
-        try {
-            const result = await this.transactionRepository.findOne({
-                where: {
-                    transaction_id: id
-                }
-            })
-
-            if (!result) {
-                throw new Error("failed to to get transaction not found ")
-            }
-
-            Object.assign(result, data);
-
-
-            const updatedTransaction = await this.transactionRepository.save(result);
-
-            return updatedTransaction;
-
-        } catch (error) {
-            throw new Error('failed to update transaction: ' + error.message)
+  async confirmPayment(id: number): Promise<{ message: string }> {
+    try {
+      const transaction = await this.transactionRepository.findOneOrFail({
+        where: {
+          id: id
         }
+      });
+
+      if (transaction.status !== 'paying') {
+        throw new ForbiddenException('Unable to confirm this payment. Payment for this transaction has already been confirmed.');
+      }
+
+      transaction.status = 'verifying';
+      await this.transactionRepository.save(transaction);
+
+      return { message: 'Payment has been confirmed. Please wait for admin verification.' };
+    } catch (error) {
+      throw new NotFoundException('Transaction not found');
     }
+  }
 
-    async deleteTransaction(id: string): Promise<Transaction> {
-        try {
-            const result = await this.transactionRepository.findOne({
-                where: {
-                    transaction_id: id
-                }
-            })
+  // ini
 
-            if (!result) {
-                throw new Error("failed to to get transaction not found ")
-            }
 
-            this.transactionRepository.remove(result)
+  async findAll(): Promise<Transaction[]> {
+    return this.transactionRepository.find();
+  }
 
-            return result;
-        } catch (error) {
-            throw new Error("failed to delete transaction: " + error.message)
-        }
+  async acceptTransaction(id: number): Promise<void> {
+    const transaction = await this.transactionRepository.findOne({
+      where: { id, status: 'verifying' },
+    });
+    if (!transaction) {
+      throw new NotFoundException('Transaction not found or cannot be accepted');
     }
+    transaction.status = 'accepted';
+    await this.transactionRepository.save(transaction);
+  }
+
+  async rejectTransaction(id: number): Promise<void> {
+    const transaction = await this.transactionRepository.findOne({
+      where: { id, status: 'verifying' },
+    });
+    if (!transaction) {
+      throw new NotFoundException('Transaction not found or cannot be rejected');
+    }
+    transaction.status = 'rejected';
+    await this.transactionRepository.save(transaction);
+  }
 }
-
-

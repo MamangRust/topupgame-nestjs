@@ -1,16 +1,23 @@
-import { IsNotEmpty, IsString } from "class-validator";
-
+import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateBankDto {
+    @ApiProperty({ description: 'Bank name', example: 'Example Bank' })
     @IsNotEmpty()
     @IsString()
-    account_name: string;
+    @MaxLength(255)
+    name: string;
 
+    @ApiProperty({ description: 'Account holder name', example: 'John Doe' })
     @IsNotEmpty()
     @IsString()
-    bank_name: string;
+    @MaxLength(255)
+    holderName: string;
 
+    @ApiProperty({ description: 'Account holder numbers', example: '1234567890' })
     @IsNotEmpty()
     @IsString()
-    no_rekening: string;
+    @MaxLength(20)
+    holderNumbers: string;
 }
+

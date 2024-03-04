@@ -1,15 +1,19 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsString, MaxLength } from 'class-validator';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class UpdateBankDto {
-    @IsOptional()
+    @ApiPropertyOptional({ description: 'Bank name', example: 'Updated Bank' })
     @IsString()
-    account_name: string;
+    @MaxLength(255)
+    name?: string;
 
-    @IsOptional()
+    @ApiPropertyOptional({ description: 'Account holder name', example: 'John Doe' })
     @IsString()
-    bank_name: string;
+    @MaxLength(255)
+    holderName?: string;
 
-    @IsOptional()
+    @ApiPropertyOptional({ description: 'Account holder numbers', example: '1234567890' })
     @IsString()
-    no_rekening: string;
+    @MaxLength(20)
+    holderNumbers?: string;
 }

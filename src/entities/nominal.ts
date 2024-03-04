@@ -1,29 +1,21 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn } from "typeorm";
-import { VoucherNominal } from "./voucherNominal";
-import { Voucher } from "./voucher";
-
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Transaction } from './transaction';
 
 @Entity()
 export class Nominal {
-  @PrimaryColumn({ length: 25 })
-  nominal_id: string;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column()
-  coin_quantity: number;
+    @Column()
+    name: string;
 
-  @Column()
-  coin_name: string;
+    @Column()
+    quantity: number;
 
-  @Column({ default: 0 })
-  price: number;
+    @Column("decimal", { precision: 10, scale: 2 })
+    price: number;
 
-  @Column()
-  description: string;
 
-  @OneToMany(() => VoucherNominal, voucherNominal => voucherNominal.nominal)
-  voucherNominals: VoucherNominal[];
-
-  @ManyToMany(() => Voucher, voucher => voucher.nominals)
-  @JoinTable()
-  vouchers: Voucher[];
+    @OneToMany(() => Transaction, transaction => transaction.nominal) // One-to-Many relation with Transaction
+    transactions: Transaction[]; // Define transactions property
 }

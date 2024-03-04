@@ -1,0 +1,976 @@
+_type: export
+__export_format: 4
+__export_date: 2024-03-04T15:46:50.609Z
+__export_source: insomnia.desktop.app:v8.4.0
+resources:
+  - _id: req_319e321f40c048bcb6100e6e03599820
+    parentId: fld_43d227b358ca4cb3b09330189b7dfa8d
+    modified: 1709566880148
+    created: 1709565678536
+    url: localhost:3000/transactions/create
+    name: Create
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+            "voucherId": 1,
+            "nominalId": 1,
+            "paymentMethodId": 1,
+            "bankId": 2
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_5ca3342d294543eeb393841ae0017b1a
+      - name: User-Agent
+        value: insomnia/8.4.0
+        id: pair_f2a3857f820441f98c9dc26f4eb42781
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTY2NjY2fQ.pktv0ZPjwyfgmxsK9ecipfyWIBEV_MHH0LO3doER5_Q
+    metaSortKey: -1709565678536
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_43d227b358ca4cb3b09330189b7dfa8d
+    parentId: wrk_7c6f756f293a46dfa911dbcf4c0b3cd7
+    modified: 1709565672662
+    created: 1709565672662
+    name: Transaction
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1709565672662
+    _type: request_group
+  - _id: wrk_7c6f756f293a46dfa911dbcf4c0b3cd7
+    parentId: null
+    modified: 1709550436556
+    created: 1709550436556
+    name: Topup-game
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_b7c8b7e017344801a59a5886616303d8
+    parentId: fld_572c07bb883a4e37812d650d754e10d3
+    modified: 1709565637514
+    created: 1709565585175
+    url: localhost:3000/vouchers/1
+    name: Delete
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/8.4.0
+    authentication: {}
+    metaSortKey: -1709565585175
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_572c07bb883a4e37812d650d754e10d3
+    parentId: wrk_7c6f756f293a46dfa911dbcf4c0b3cd7
+    modified: 1709563196001
+    created: 1709563196001
+    name: Voucher
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1709563196001
+    _type: request_group
+  - _id: req_2f735a09f2824cce86e31fac404a082a
+    parentId: fld_572c07bb883a4e37812d650d754e10d3
+    modified: 1709565572658
+    created: 1709565566922
+    url: http://localhost:3000/vouchers/update/1
+    name: Update
+    description: ""
+    method: PUT
+    body:
+      mimeType: multipart/form-data
+      params:
+        - name: name
+          value: '"Updated Voucher"'
+          type: text
+        - name: categoryId
+          value: "1"
+          type: text
+        - name: nominalIds[]
+          value: "1"
+          type: text
+        - name: image
+          fileName: /home/holyraven/Pictures/Test_program/Test_product.png
+          type: file
+    parameters: []
+    headers:
+      - name: Authorization
+        value: Bearer
+          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTYzMjM2fQ.6x5f4XrltLTof8xbvYk8B9rIMJ-SdqhvBSco93Ny4Uw
+      - name: Content-Type
+        value: multipart/form-data
+      - name: User-Agent
+        value: insomnia/8.4.0
+    authentication: {}
+    metaSortKey: -1709565566922
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_35f1142bf1db49d1ba9a84227f3a01ec
+    parentId: fld_572c07bb883a4e37812d650d754e10d3
+    modified: 1709565507057
+    created: 1709563290526
+    url: localhost:3000/vouchers/create
+    name: Create
+    description: ""
+    method: POST
+    body:
+      mimeType: multipart/form-data
+      params:
+        - id: pair_ae2bbc15e2c442e9a282c850633b9415
+          name: name
+          value: Mobile Dota
+          description: ""
+        - id: pair_d7c99de96b8c436b868d727ce32f92e1
+          name: categoryId
+          value: "1"
+          description: ""
+        - id: pair_38393ca33c3948998aab1ec8cfa393d2
+          name: nominalIds[]
+          value: "1"
+          description: ""
+          disabled: false
+        - id: pair_dcbf8b3519524061b5ed3f2a8658bdde
+          name: image
+          value: ""
+          description: ""
+          type: file
+          fileName: /home/holyraven/Pictures/Test_program/Test_product.png
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: multipart/form-data
+      - name: User-Agent
+        value: insomnia/8.4.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTYzMjM2fQ.6x5f4XrltLTof8xbvYk8B9rIMJ-SdqhvBSco93Ny4Uw
+    metaSortKey: -1709563290526
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_f6f9df981ee744adbcbf606016023d3b
+    parentId: fld_572c07bb883a4e37812d650d754e10d3
+    modified: 1709565614512
+    created: 1709563256909
+    url: localhost:3000/vouchers/1
+    name: GetId
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/8.4.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTYzMjM2fQ.6x5f4XrltLTof8xbvYk8B9rIMJ-SdqhvBSco93Ny4Uw
+    metaSortKey: -1709563256909
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c6b4a2edbd2d4abb8d120178d16cc792
+    parentId: fld_572c07bb883a4e37812d650d754e10d3
+    modified: 1709563252220
+    created: 1709563199379
+    url: localhost:3000/vouchers
+    name: GetAll
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/8.4.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTYzMjM2fQ.6x5f4XrltLTof8xbvYk8B9rIMJ-SdqhvBSco93Ny4Uw
+    metaSortKey: -1709563199379
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_f8641cd9edf24926b0f586916c7919c3
+    parentId: fld_6c83c3e0198f4c7aa13b23a2044a8e5d
+    modified: 1709561859628
+    created: 1709561578963
+    url: http://localhost:3000/payment
+    name: GetAll
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTYxNzYwfQ.jB9Nt0A2s38fXbMRXrmIQxSA8YG536v-J4lJyDFfbp4
+    metaSortKey: -1709561521599
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_6c83c3e0198f4c7aa13b23a2044a8e5d
+    parentId: wrk_7c6f756f293a46dfa911dbcf4c0b3cd7
+    modified: 1709563182561
+    created: 1709561517905
+    name: Payment-Method
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1709561517905
+    _type: request_group
+  - _id: req_a99792f013ca46329c7488ad187819c4
+    parentId: fld_6c83c3e0198f4c7aa13b23a2044a8e5d
+    modified: 1709561877799
+    created: 1709561607243
+    url: http://localhost:3000/payment/1
+    name: GetId
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - id: pair_8b4b64950ca54c23b979d0ea3be52d23
+        name: ""
+        value: ""
+        description: ""
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTYxNzYwfQ.jB9Nt0A2s38fXbMRXrmIQxSA8YG536v-J4lJyDFfbp4
+    metaSortKey: -1709561521549
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_d0cf649efb544dc3b5a5fdb8bd3f602c
+    parentId: fld_6c83c3e0198f4c7aa13b23a2044a8e5d
+    modified: 1709561652574
+    created: 1709561643286
+    url: http://localhost:3000/payment/1
+    name: Update
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: '{     "name": "UpdatedPaymentMethod",     "bankIds": [4, 5, 6] }'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: Authorization
+        value: Bearer YOUR_ACCESS_TOKEN
+    authentication: {}
+    metaSortKey: -1709561521536.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a796759a9f5242d4b01747a91d9ab09c
+    parentId: fld_6c83c3e0198f4c7aa13b23a2044a8e5d
+    modified: 1709563096101
+    created: 1709561625754
+    url: http://localhost:3000/payment
+    name: Create
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: '{     "name": "Paymen",     "bankIds": [2] }'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_0002656f63c94c4f962e86e272f7560a
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTYxNzYwfQ.jB9Nt0A2s38fXbMRXrmIQxSA8YG536v-J4lJyDFfbp4
+    metaSortKey: -1709561521524
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_2c20a500ffb54e4a95241a0531261e17
+    parentId: fld_6c83c3e0198f4c7aa13b23a2044a8e5d
+    modified: 1709561667478
+    created: 1709561659186
+    url: http://localhost:3000/payment/1
+    name: Delete
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - name: Authorization
+        value: Bearer YOUR_ACCESS_TOKEN
+    authentication: {}
+    metaSortKey: -1709561521511.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_08074f3aee9c48f9895a7090e1454c06
+    parentId: fld_6c83c3e0198f4c7aa13b23a2044a8e5d
+    modified: 1709561570422
+    created: 1709561558780
+    url: http://localhost:3000/payment/client
+    name: Member
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1709561521499
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_0d5819b9483b4cd6b171a3e4cabe215c
+    parentId: fld_482336541d014c15b9fabbe27e619c71
+    modified: 1709561062926
+    created: 1709560971214
+    url: http://localhost:3000/nominals/1
+    name: GetId
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTYxMDQ1fQ.GYkjBY4YBuwDmwR9bciWXteUVBGvBBaeCzFVwnOjZCA
+    metaSortKey: -1709556969461
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_482336541d014c15b9fabbe27e619c71
+    parentId: wrk_7c6f756f293a46dfa911dbcf4c0b3cd7
+    modified: 1709556965950
+    created: 1709556965950
+    name: Nominals
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1709556965950
+    _type: request_group
+  - _id: req_01f1cccf39bc43419b5bf618acfa4744
+    parentId: fld_482336541d014c15b9fabbe27e619c71
+    modified: 1709563048710
+    created: 1709560994486
+    url: http://localhost:3000/nominals
+    name: Create
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: '{     "name": "Example Nominasl",     "quantity": 10,     "price": 50 }'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTYxMDQ1fQ.GYkjBY4YBuwDmwR9bciWXteUVBGvBBaeCzFVwnOjZCA
+    metaSortKey: -1709556969411
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_e90a48329b7b413b99294b14769c4442
+    parentId: fld_482336541d014c15b9fabbe27e619c71
+    modified: 1709561086557
+    created: 1709561013983
+    url: http://localhost:3000/nominals/1
+    name: Update
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: '{     "name": "Updated Nominal",     "quantity": 15,     "price": 70 }'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTYxMDQ1fQ.GYkjBY4YBuwDmwR9bciWXteUVBGvBBaeCzFVwnOjZCA
+    metaSortKey: -1709556969386
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_8738386e76aa4f4d90f898c1d1af3fbb
+    parentId: fld_482336541d014c15b9fabbe27e619c71
+    modified: 1709561039342
+    created: 1709561031031
+    url: http://localhost:3000/nominals/1
+    name: Delete
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1709556969373.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_2985b6bff4c5422cbbb45ba9703b51ff
+    parentId: fld_482336541d014c15b9fabbe27e619c71
+    modified: 1709557022546
+    created: 1709556969361
+    url: localhost:3000/nominals
+    name: GetAll
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/8.4.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTU3MDEwfQ.LMb-rYEE98eOfyt38aKiDX6fQEgTunyGSB9_zq7_CbM
+    metaSortKey: -1709556969361
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a5ede780bfc547ad816e712dd12a1afd
+    parentId: fld_9a8406bb24a747faa38bf0b257372fed
+    modified: 1709565917770
+    created: 1709554963602
+    url: localhost:3000/members/signin
+    name: signin
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "mengolang@gmail.com",
+        	"password": "mengolanggg"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/8.4.0
+    authentication: {}
+    metaSortKey: -1709554963602
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_9a8406bb24a747faa38bf0b257372fed
+    parentId: wrk_7c6f756f293a46dfa911dbcf4c0b3cd7
+    modified: 1709554676800
+    created: 1709554676800
+    name: Members
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1709554676800
+    _type: request_group
+  - _id: req_2a9f32c443004182ab8e47b018f248a9
+    parentId: fld_9a8406bb24a747faa38bf0b257372fed
+    modified: 1709554953025
+    created: 1709554681839
+    url: localhost:3000/members/signup
+    name: signup-members
+    description: ""
+    method: POST
+    body:
+      mimeType: multipart/form-data
+      params:
+        - id: pair_30a8d3181159443dae824b5bddd00f90
+          name: fullName
+          value: Mengolang
+          description: ""
+        - id: pair_57aa4973a2214a108de2ca1629883a87
+          name: email
+          value: mengolang@gmail.com
+          description: ""
+        - id: pair_1adcb671190e4c3a997803efe8443d9d
+          name: password
+          value: mengolanggg
+          description: ""
+        - id: pair_7543941425fe4bc08c743b17274178e9
+          name: favoriteCategory
+          value: "1"
+          description: ""
+        - id: pair_4cd2f94844084e789c4a08ad01f931b0
+          name: avatar
+          value: ""
+          description: ""
+          type: file
+          fileName: /home/holyraven/Pictures/Test_program/Test_product.png
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: multipart/form-data
+      - name: User-Agent
+        value: insomnia/8.4.0
+    authentication: {}
+    metaSortKey: -1709554681839
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_619a58e626e14560af9f5c34e7d562b7
+    parentId: fld_0d7cf549546a40b5b85eafaaee230779
+    modified: 1709552879683
+    created: 1709552857527
+    url: http://localhost:3000/category/1
+    name: GetId
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTUyODMyfQ.rPIMbBBQnLYKbUFhoqUmdci0hHBqg9PeL4Dd0nAoV5g
+    metaSortKey: -1709552811209
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_0d7cf549546a40b5b85eafaaee230779
+    parentId: wrk_7c6f756f293a46dfa911dbcf4c0b3cd7
+    modified: 1709552796214
+    created: 1709552796214
+    name: Category
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1709552796214
+    _type: request_group
+  - _id: req_14edf795fc7240329405132055e0e207
+    parentId: fld_0d7cf549546a40b5b85eafaaee230779
+    modified: 1709553150681
+    created: 1709553119299
+    url: http://localhost:3000/category
+    name: Creatr
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: '{"name": "New Category"}'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTUyODMyfQ.rPIMbBBQnLYKbUFhoqUmdci0hHBqg9PeL4Dd0nAoV5g
+    metaSortKey: -1709552811159
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_1de9005d07a84c5aa2d9c2543d569f78
+    parentId: fld_0d7cf549546a40b5b85eafaaee230779
+    modified: 1709553247960
+    created: 1709553226802
+    url: http://localhost:3000/category/1
+    name: Update
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: '{"name": "Updated Category"}'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTUyODMyfQ.rPIMbBBQnLYKbUFhoqUmdci0hHBqg9PeL4Dd0nAoV5g
+    metaSortKey: -1709552811134
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_034c43f2834d4472ba9c12bd48de41e2
+    parentId: fld_0d7cf549546a40b5b85eafaaee230779
+    modified: 1709552844760
+    created: 1709552804171
+    url: http://localhost:3000/category
+    name: GetAll
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTUyODMyfQ.rPIMbBBQnLYKbUFhoqUmdci0hHBqg9PeL4Dd0nAoV5g
+    metaSortKey: -1709552811109
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_57fd95a49a9c46a19437cbe08158bfee
+    parentId: fld_0d7cf549546a40b5b85eafaaee230779
+    modified: 1709553460613
+    created: 1709553452272
+    url: http://localhost:3000/category/1
+    name: Delete
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1709552811009
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_871d65bec6e246d9a68841d33b6752d6
+    parentId: fld_3c60acaee3d142aa869cc43569e80896
+    modified: 1709551327293
+    created: 1709551298493
+    url: http://localhost:3000/banks/1
+    name: Get id
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTUxMTc0fQ.NIcpYqB3D-Me2bhtwTfs8gQpYhffs3jpi7Lm87HcAvo
+    metaSortKey: -1709551126573
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_3c60acaee3d142aa869cc43569e80896
+    parentId: wrk_7c6f756f293a46dfa911dbcf4c0b3cd7
+    modified: 1709554669320
+    created: 1709551122760
+    name: Banks
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1709551122760
+    _type: request_group
+  - _id: req_b9177321f5b74949989f8102afe4e49b
+    parentId: fld_3c60acaee3d142aa869cc43569e80896
+    modified: 1709551378784
+    created: 1709551343401
+    url: http://localhost:3000/banks
+    name: Create
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: '{     "name": "Example Bank",     "holderName": "John
+        Doe",     "holderNumbers": "1234567890" }'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTUxMTc0fQ.NIcpYqB3D-Me2bhtwTfs8gQpYhffs3jpi7Lm87HcAvo
+    metaSortKey: -1709551126523
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_351da6e29e4647c08e7c0eed80456c17
+    parentId: fld_3c60acaee3d142aa869cc43569e80896
+    modified: 1709551524224
+    created: 1709551499482
+    url: http://localhost:3000/banks/1
+    name: Delete
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTUxMzY3fQ.Psh1JnlXO5fub9qyNDgZH8kLrsNuFjYwa90WQNRle8c
+    metaSortKey: -1709551126510.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_0f455e49b60a48378e7f2737fb59e2b2
+    parentId: fld_3c60acaee3d142aa869cc43569e80896
+    modified: 1709551478171
+    created: 1709551395474
+    url: http://localhost:3000/banks/1
+    name: Update
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: '{     "name": "Updated Bank",     "holderNumbers":
+        "1234567890","holderName": "Jane Doe" }'
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTUxMzY3fQ.Psh1JnlXO5fub9qyNDgZH8kLrsNuFjYwa90WQNRle8c
+    metaSortKey: -1709551126498
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_867aab0bc5fb4740a0953603e42c2d47
+    parentId: fld_3c60acaee3d142aa869cc43569e80896
+    modified: 1709551188115
+    created: 1709551141101
+    url: http://localhost:3000/banks
+    name: GetAll
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTUxMTc0fQ.NIcpYqB3D-Me2bhtwTfs8gQpYhffs3jpi7Lm87HcAvo
+    metaSortKey: -1709551126473
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_68c537d6f0fe40239990cfd946630845
+    parentId: fld_95d9f6047bf14dca904e0fb0a4baff33
+    modified: 1709553144586
+    created: 1709550675003
+    url: http://localhost:3000/admin/signin
+    name: Login
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+            "email": "john.doe@example.com",
+            "password": "yourpassword"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/8.4.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NTUxMTc0fQ.NIcpYqB3D-Me2bhtwTfs8gQpYhffs3jpi7Lm87HcAvo
+      disabled: false
+    metaSortKey: -1709550675003
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_95d9f6047bf14dca904e0fb0a4baff33
+    parentId: wrk_7c6f756f293a46dfa911dbcf4c0b3cd7
+    modified: 1709550445961
+    created: 1709550445961
+    name: Admin
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1709550445961
+    _type: request_group
+  - _id: req_5d3a90433ad943e9b35c3d8f95f02f33
+    parentId: fld_95d9f6047bf14dca904e0fb0a4baff33
+    modified: 1709550776868
+    created: 1709550450423
+    url: localhost:3000/admin/signup
+    name: Register
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+            "fullName": "dragon kingh",
+            "email": "john.doe3@example.com",
+            "password": "yourpassword",
+            "retypePassword": "yourpassword"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/8.4.0
+    authentication: {}
+    metaSortKey: -1709550450423
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_48961cb049c2be272f44f3051252941cac955b5a
+    parentId: wrk_7c6f756f293a46dfa911dbcf4c0b3cd7
+    modified: 1709567121627
+    created: 1709550436562
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: {}
+    color: null
+    isPrivate: false
+    metaSortKey: 1709550436563
+    _type: environment
+  - _id: jar_48961cb049c2be272f44f3051252941cac955b5a
+    parentId: wrk_7c6f756f293a46dfa911dbcf4c0b3cd7
+    modified: 1709550436565
+    created: 1709550436565
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar

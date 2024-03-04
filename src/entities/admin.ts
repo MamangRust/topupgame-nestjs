@@ -1,22 +1,22 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
-import { User } from "./user";
-import { Voucher } from "./voucher";
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { IsEmail, Length } from "class-validator";
 
 
 @Entity()
 export class Administrator {
-  @PrimaryColumn({ length: 25 })
-  admin_id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ length: 25, nullable: true })
-  user_id: string;
+  @Column()
+  @Length(1, 255)
+  fullName: string;
 
-  @Column('text', { nullable: true })
-  address: string;
+  @Column({ unique: true })
+  @IsEmail()
+  email: string;
 
-  @ManyToOne(() => User, user => user.administrator)
-  user: User;
+  @Column()
+  password: string;
 
-  @OneToMany(() => Voucher, voucher => voucher.admin)
-  vouchers: Voucher[];
+
 }

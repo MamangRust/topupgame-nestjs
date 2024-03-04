@@ -1,25 +1,31 @@
-import { Column, Entity, ManyToMany, OneToMany, PrimaryColumn } from "typeorm";
-import { PaymentBank } from "./paymentBank";
-import { PaymentMethod } from "./paymentmethod";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { PaymentMethod } from "./payment_method";
+import { Transaction } from "./transaction";
+
 
 
 @Entity()
 export class Bank {
-  @PrimaryColumn({ length: 15 })
-  bank_id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ length: 25 })
-  account_name: string;
+  @Column()
+  name: string;
 
-  @Column({ length: 25 })
-  bank_name: string;
+  @Column()
+  holderName: string;
 
-  @Column({ length: 20 })
-  no_rekening: string;
+  @Column()
+  holderNumbers: string;
 
-  @OneToMany(() => PaymentBank, paymentBank => paymentBank.bank)
-  paymentBanks: PaymentBank[];
+  @ManyToMany(() => PaymentMethod)
+  @JoinTable({
+    name: 'payment_method_bank',
+    joinColumn: { name: 'bank_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'payment_method_id', referencedColumnName: 'id' },
+  })
+  paymentMethods: PaymentMethod[];
 
-  @ManyToMany(() => PaymentMethod, paymentMethod => paymentMethod.banks)
-  payment_methods: PaymentMethod[];
+  @OneToMany(() => Transaction, transaction => transaction.targetBank)
+  transactions: Transaction[];
 }

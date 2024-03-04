@@ -1,47 +1,57 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
-import { Voucher } from "./voucher";
-import { Category } from "./category";
-import { Player } from "./player";
-import { History } from "./history";
-import { PaymentMethod } from "./paymentmethod";
-
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    ManyToOne,
+    CreateDateColumn,
+    UpdateDateColumn,
+} from 'typeorm';
+import { Category } from './category';
+import { Nominal } from './nominal';
+import { Bank } from './bank';
+import { Member } from './member';
 
 @Entity()
 export class Transaction {
-  @PrimaryColumn({ length: 30 })
-  transaction_id: string;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column({ length: 25 })
-  name: string;
+    @Column()
+    voucherName: string;
 
-  @Column({ length: 128 })
-  account_game: string;
+    @Column()
+    imageName: string;
 
-  @Column({ default: 0 })
-  tax: number;
+    @ManyToOne(() => Category, category => category.transactions)
+    category: Category;
 
-  @Column()
-  value: number;
+    @ManyToOne(() => Nominal, nominal => nominal.transactions)
+    nominal: Nominal;
 
-  @Column({ length: 8 })
-  status: string
+    @Column()
+    paymentMethod: string;
 
-  @Column()
-  is_paid: boolean;
+    @ManyToOne(() => Bank, bank => bank.transactions)
+    targetBank: Bank;
 
-  @ManyToOne(() => History, history => history.transactions)
-  history: History;
+    @Column({ type: 'decimal', precision: 5, scale: 2, default: 0 })
+    taxRate: number;
 
-  @ManyToOne(() => Voucher, voucher => voucher.transactions)
-  voucher: Voucher;
+    @ManyToOne(() => Member, member => member.transactions)
+    member: Member;
 
-  @ManyToOne(() => Category, category => category.transactions)
-  category: Category;
+    @Column({ default: 'paying' })
+    status: string;
 
-  @ManyToOne(() => Player, player => player.transactions)
-  player: Player;
+    @CreateDateColumn()
+    createdAt: Date;
 
-  @ManyToOne(() => PaymentMethod, paymentMethod => paymentMethod.transactions)
-  paymentMethod: PaymentMethod
+    @UpdateDateColumn()
+    updatedAt: Date;
 
+    getTotalPrice(): number {
+        const subTotal = this.nominal.price;
+        const totalPrice = subTotal * this.taxRate + subTotal;
+        return totalPrice;
+    }
 }
